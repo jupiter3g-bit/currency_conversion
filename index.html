@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>映画向けサクッと通貨換算</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; }
+  h2 { margin-bottom: 10px; }
+  input, select, button { font-size: 1em; margin: 5px; padding: 5px; }
+  .result { margin-top: 15px; }
+  .number { color: blue; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h2>映画向けサクッと通貨換算</h2>
+
+<label>通貨を選択:
+  <select id="fromCurrency">
+    <option value="USD" selected>アメリカ</option>
+    <option value="GBP">イギリス</option>
+    <option value="KRW">韓国</option>
+    <option value="CNY">中国</option>
+    <option value="JPY">日本</option>
+  </select>
+</label>
+
+<input type="number" id="amount" placeholder="金額" />
+<button id="convert">換算</button>
+
+<div id="results" class="result"></div>
+
+<script>
+const currencyMap = {
+  "USD": "アメリカ",
+  "GBP": "イギリス",
+  "KRW": "韓国",
+  "CNY": "中国",
+  "JPY": "日本"
+};
+
+const formatAmount = (num) => {
+  if(typeof num !== "number" || isNaN(num)) return "取得失敗";
+  if(num >= 100000000) return (num/100000000).toFixed(2) + "億";
+  if(num >= 10000) return (num/10000).toFixed(2) + "万";
+  return num.toFixed(0);
+};
+
+document.getElementById("convert").addEventListener("click", async () => {
+  const from = document.getElementById("fromCurrency").value;
+  const amount = parseFloat(document.getElementById("amount").value);
+  if(!amount) return alert("金額を入力してください");
+
+  // 出力通貨順を設定
+  const order = ["USD","GBP","KRW","CNY","JPY"].filter(c => c !== from);
+  let displayOrder;
+  if(from === "JPY") {
+    displayOrder = ["USD", ...order.filter(c => c !== "USD")];
+  } else {
+    displayOrder = ["JPY", ...order.filter(c => c !== "JPY")];
+  }
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "換算結果:<br>";
+
+  const promises = displayOrder.map(to =>
+    fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`)
+      .then(res => res.json())
+      .then(data => ({to, value: data.result}))
+      .catch(() => ({to, value: 0}))
+  );
+
+  try {
+    const results = await Promise.all(promises);
+    results.forEach(r => {
+      resultsDiv.innerHTML += `${currencyMap[r.to]}: <span class="number">${formatAmount(r.value)}</span><br>`;
+    });
+  } catch (e) {
+    resultsDiv.innerHTML += "換算中にエラーが発生しました";
+    console.error(e);
+  }
+});
+</script>
+
+</body>
+</html>
