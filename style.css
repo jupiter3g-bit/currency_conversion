@@ -1,0 +1,93 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 10px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.title {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.input-box {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px auto 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 350px;
+  font-size: 1.2em;
+  overflow: hidden;
+}
+
+.input-box select {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 1.2em;
+  text-align: center;
+  border-right: 1px solid #ccc;
+  appearance: none;
+}
+
+.input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-wrap input[type=number] {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 1.2em;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.input-wrap .unit {
+  margin-left: 4px;
+  color: black;
+}
+
+#results {
+  width: 95%;
+  max-width: 370px;
+  margin: 0 auto;
+}
+
+.result-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+.result-box .num {
+  color: #0077cc;
+  font-weight: bold;
+}
+
+.result-box .unit {
+  color: black;
+  font-weight: normal;
+}
+
+/* レスポンシブ */
+@media (max-width: 370px) {
+  .input-box, .result-box {
+    flex-direction: column;
+  }
+}
