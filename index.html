@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>映画向け通貨換算</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="title">映画向け通貨換算</h1>
+
+  <div class="input-box">
+    <select id="fromCurrency">
+      <option value="USD" selected>アメリカ</option>
+      <option value="GBP">イギリス</option>
+      <option value="KRW">韓国</option>
+      <option value="CNY">中国</option>
+      <option value="JPY">日本</option>
+    </select>
+    <div class="input-wrap">
+      <input type="number" id="amount" placeholder="金額">
+      <span class="unit">USD</span>
+    </div>
+  </div>
+
+  <div id="results">
+    <!-- 換算結果表示 -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
